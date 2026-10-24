@@ -31,7 +31,13 @@ The site respects `prefers-reduced-motion`. Fonts and photos are hosted locally.
 
 ## Content handover
 
-Contact information is centralized in `src/content.ts`. The enquiry recipient allowlist is in `src/enquiry.ts`. Complete business registration details, a business address, and approved legal text were not supplied; add the final legal notice and privacy text before a public company launch. The Sites preview is initially owner-private.
+Contact information is centralized in `src/content.ts`. The enquiry recipient allowlist is in `src/enquiry.ts`. Complete business registration details, a business address, and approved legal text were not supplied; add the final legal notice and privacy text before a public company launch.
+
+## Deployment
+
+The website deploys to Vercel as a static Vite application. `vercel.json` sets `npm ci` as the install command, `npm run build` as the build command, and `dist` as the output directory. No environment variables or backend services are needed. The hash-based pages work without server rewrites.
+
+The public source repository contains the application, local fonts, photography, asset credits, tests, and lockfile. Local hosting connection metadata is ignored by Git and excluded from deployment uploads.
 
 ## Design research
 

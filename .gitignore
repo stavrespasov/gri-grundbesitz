@@ -2,5 +2,6 @@ node_modules/
 dist/
 *.tsbuildinfo
 .env*
-.openai/local/
+.openai/
+.vercel/
 *.tar.gz

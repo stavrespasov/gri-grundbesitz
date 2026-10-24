@@ -1,0 +1,7 @@
+.openai/
+.git/
+node_modules/
+dist/
+*.tsbuildinfo
+*.zip
+*.tar.gz
