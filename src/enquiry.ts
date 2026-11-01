@@ -81,6 +81,13 @@ export function validateEnquiryStep(
   return errors;
 }
 
+export function validateEnquiry(data: EnquiryData): Record<string, string> {
+  return Object.assign(
+    {},
+    ...[0, 1, 2].map((step) => validateEnquiryStep(data, step)),
+  );
+}
+
 export function createEnquiryMailto(
   data: EnquiryData,
   recipient: string = RECIPIENTS[0],

@@ -4,11 +4,15 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "prepare:fonts": "node scripts/fetch-fonts.mjs",
+    "predev": "npm run prepare:fonts",
+    "prebuild": "npm run prepare:fonts",
     "dev": "vite --host 127.0.0.1 --port 5173",
     "build": "tsc -b && vite build",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "test": "node --experimental-strip-types --test tests/*.test.ts",
+    "test:e2e": "playwright test",
     "preview": "vite preview --host 127.0.0.1 --port 4173"
   },
   "dependencies": {
@@ -21,6 +25,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",
+    "@playwright/test": "^1.64.1",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^4.3.4",

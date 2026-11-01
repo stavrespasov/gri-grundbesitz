@@ -2,6 +2,9 @@ node_modules/
 dist/
 *.tsbuildinfo
 .env*
+public/fonts/boska-*.woff2
+public/fonts/boska-*.tmp
 .openai/
 .vercel/
 *.tar.gz
+.vercel

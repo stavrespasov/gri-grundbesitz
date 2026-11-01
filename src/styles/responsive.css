@@ -1,0 +1,705 @@
+@media (min-width: 1700px) {
+  .hero-content {
+    padding-top: 105px;
+  }
+  .hero h1 {
+    font-size: 145px;
+  }
+  .hero-description {
+    font-size: 16px;
+  }
+  .hero-actions {
+    margin-top: 35px;
+  }
+}
+@media (max-width: 1150px) {
+  .site-header {
+    gap: 20px;
+  }
+  .desktop-nav {
+    gap: 22px;
+    margin-right: 10px;
+  }
+  .wordmark-descriptor {
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    padding-left: 10px;
+  }
+  .wordmark {
+    gap: 10px;
+  }
+  .header-enquire {
+    gap: 12px;
+  }
+  .hero {
+    min-height: 720px;
+  }
+  .hero h1 {
+    font-size: 104px;
+  }
+  .hero-content {
+    padding-top: 70px;
+  }
+  .hero-experience {
+    right: var(--page-pad);
+    width: 155px;
+    bottom: 115px;
+  }
+  .acquisition-grid,
+  .region-grid {
+    gap: 6%;
+    grid-template-columns: 1fr 1.1fr;
+  }
+  .family-content {
+    padding: 55px 36px 32px;
+  }
+  .family-image {
+    min-height: 610px;
+  }
+  .family-facts {
+    gap: 25px;
+  }
+  .family-facts > div {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .contact-phone {
+    font-size: 30px;
+  }
+}
+@media (max-width: 850px) {
+  .section-space {
+    padding-top: 76px;
+    padding-bottom: 76px;
+  }
+  .site-header {
+    height: 80px;
+  }
+  .wordmark-name {
+    font-size: 39px;
+  }
+  .desktop-nav {
+    display: none;
+  }
+  .header-enquire {
+    margin-left: auto;
+  }
+  .menu-trigger {
+    display: grid;
+  }
+  .hero {
+    height: auto;
+    min-height: 730px;
+  }
+  .hero-frame {
+    inset: 20px;
+  }
+  .hero-content {
+    width: 100%;
+    padding-top: 68px;
+  }
+  .hero h1 {
+    font-size: 104px;
+  }
+  .hero-photo img {
+    object-position: 62% center;
+  }
+  .hero-experience {
+    bottom: 112px;
+    width: 132px;
+  }
+  .hero-experience strong {
+    font-size: 85px;
+  }
+  .hero-experience > span {
+    font-size: 8px;
+  }
+  .hero-location {
+    display: none;
+  }
+  .hero-shade {
+    background:
+      linear-gradient(90deg, #092018e3, #092018a8 50%, #09201845),
+      linear-gradient(0deg, #09201899, transparent);
+  }
+  .acquisition-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 36px;
+  }
+  .acquisition-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 40px;
+  }
+  .acquisition-intro > p {
+    margin-top: 7px;
+    font-size: 16px;
+  }
+  .small-assurance {
+    margin-top: 25px;
+  }
+  .property-title {
+    font-size: 34px;
+  }
+  .property-row {
+    padding: 23px 0;
+  }
+  .process-grid {
+    gap: 25px;
+  }
+  .process-step {
+    gap: 11px;
+  }
+  .process-step h3 {
+    font-size: 11px;
+  }
+  .process-step p {
+    font-size: 16px;
+  }
+  .family {
+    grid-template-columns: 0.85fr 1.15fr;
+  }
+  .family-image {
+    min-height: 570px;
+  }
+  .family-content {
+    padding: 45px 28px 28px;
+  }
+  .family h2 {
+    font-size: 40px;
+  }
+  .family-content p {
+    font-size: 16px;
+  }
+  .family .section-label {
+    gap: 9px;
+    font-size: 8px;
+    margin-bottom: 32px;
+  }
+  .family .section-label-line {
+    width: 18px;
+  }
+  .family-facts {
+    margin: 25px 0 18px;
+  }
+  .family-facts strong {
+    font-size: 52px;
+  }
+  .family-image-frame {
+    inset: 20px;
+  }
+  .family-image-caption {
+    left: 35px;
+    bottom: 44px;
+    font-size: 23px;
+  }
+  .region-grid {
+    gap: 35px;
+    grid-template-columns: 0.85fr 1.15fr;
+  }
+  .region h2 {
+    font-size: 49px;
+  }
+  .region .section-label {
+    font-size: 8px;
+    gap: 8px;
+  }
+  .region .section-label-line {
+    width: 20px;
+  }
+  .city-list {
+    grid-template-columns: 1fr;
+    margin-top: 18px;
+  }
+  .city-list button {
+    padding: 8px 0;
+    min-height: 35px;
+  }
+  .regional-map {
+    padding: 14px;
+  }
+  .map-topline,
+  .map-bottomline {
+    font-size: 6px;
+  }
+  .contact-grid {
+    gap: 30px;
+  }
+  .contact-phone {
+    font-size: 27px;
+    gap: 12px;
+  }
+  .contact-email {
+    font-size: 13px;
+    gap: 12px;
+  }
+  .contact h2 {
+    font-size: 57px;
+  }
+  .contact-heading {
+    gap: 25px;
+  }
+  .contact-heading > .action-button {
+    gap: 15px;
+    white-space: nowrap;
+  }
+}
+@media (max-width: 600px) {
+  :root {
+    --page-pad: 24px;
+  }
+  .section-space {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+  h2 {
+    font-size: 43px;
+  }
+  .section-label {
+    margin-bottom: 31px;
+    font-size: 9px;
+    gap: 10px;
+  }
+  .site-header {
+    height: 78px;
+    gap: 8px;
+    padding: 0 22px;
+  }
+  .wordmark {
+    gap: 10px;
+  }
+  .wordmark-name {
+    font-size: 40px;
+  }
+  .wordmark-descriptor {
+    font-size: 8px;
+    letter-spacing: 0.14em;
+  }
+  .header-enquire {
+    display: none;
+  }
+  .menu-trigger {
+    margin-left: auto;
+  }
+  .hero {
+    min-height: 760px;
+    height: calc(100svh - 78px);
+    max-height: 820px;
+  }
+  .hero-frame {
+    inset: 15px;
+  }
+  .hero-frame > span {
+    width: 13px;
+    height: 13px;
+  }
+  .hero-photo img {
+    object-position: 67% center;
+  }
+  .hero-shade {
+    background:
+      linear-gradient(90deg, #092018ed, #092018ba 55%, #09201872),
+      linear-gradient(0deg, #092018ad, transparent);
+  }
+  .hero-content {
+    padding: 55px 30px 120px;
+  }
+  .hero-eyebrow {
+    font-size: 7px;
+    gap: 8px;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+  }
+  .hero h1 {
+    font-size: clamp(52px, 16.4vw, 98px);
+    line-height: 0.97;
+    margin-top: 44px;
+  }
+  .hero-subtitle {
+    font-size: 14px;
+    margin-top: 25px;
+  }
+  .hero-description {
+    max-width: 290px;
+    font-size: 16px;
+    margin-top: 14px;
+  }
+  .hero-actions {
+    margin-top: 26px;
+    gap: 22px;
+  }
+  .hero-actions > .action-button {
+    gap: 18px;
+    font-size: 10px;
+    padding: 16px;
+    min-height: 52px;
+  }
+  .hero-phone {
+    gap: 7px;
+    font-size: 13px;
+  }
+  .hero-phone svg {
+    width: 14px;
+  }
+  .hero-note {
+    font-size: 10px;
+    gap: 5px;
+    margin-top: 11px;
+  }
+  .hero-experience {
+    display: flex;
+    align-items: baseline;
+    gap: 9px;
+    width: auto;
+    right: 30px;
+    bottom: 51px;
+    padding-top: 13px;
+  }
+  .hero-experience > span {
+    display: none;
+  }
+  .hero-experience strong {
+    font-size: 42px;
+    margin: 0;
+  }
+  .hero-experience strong span {
+    font-size: 8px;
+    margin-left: 7px;
+  }
+  .hero-discover {
+    left: 30px;
+    bottom: 47px;
+    gap: 16px;
+    font-size: 9px;
+  }
+  .acquisition-intro {
+    display: block;
+  }
+  .acquisition-intro > p {
+    font-size: 16px;
+    margin-top: 22px;
+    max-width: 330px;
+  }
+  .small-assurance {
+    font-size: 10px;
+    margin-top: 22px;
+  }
+  .acquisition-grid {
+    gap: 30px;
+  }
+  .property-row {
+    gap: 14px;
+    padding: 23px 0;
+  }
+  .property-title {
+    font-size: 29px;
+  }
+  .property-number {
+    font-size: 8px;
+    padding-top: 5px;
+  }
+  .property-note {
+    font-size: 13px;
+  }
+  .property-arrow {
+    width: 32px;
+    height: 32px;
+  }
+  .property-arrow svg {
+    width: 17px;
+  }
+  .process-intro {
+    margin-top: 40px;
+    padding-top: 23px;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 7px;
+    font-size: 10px;
+  }
+  .process-grid {
+    grid-template-columns: 1fr;
+    gap: 23px;
+    margin-top: 28px;
+  }
+  .process-step {
+    gap: 19px;
+  }
+  .process-step h3 {
+    font-size: 12px;
+  }
+  .process-step p {
+    max-width: none;
+    font-size: 16px;
+    margin-top: 5px;
+  }
+  .family {
+    display: flex;
+    flex-direction: column;
+  }
+  .family-image {
+    min-height: 330px;
+    height: 330px;
+  }
+  .family-image img {
+    object-position: center 40%;
+  }
+  .family-image-frame {
+    inset: 20px;
+  }
+  .family-image-caption {
+    left: 38px;
+    bottom: 40px;
+    font-size: 26px;
+  }
+  .family-content {
+    padding: 44px 24px 30px;
+  }
+  .family .section-label {
+    font-size: 9px;
+    margin-bottom: 32px;
+  }
+  .family h2 {
+    font-size: 43px;
+  }
+  .family-content p {
+    font-size: 16px;
+    max-width: 340px;
+    margin-top: 22px;
+  }
+  .family-facts {
+    gap: 45px;
+    margin-top: 30px;
+  }
+  .family-facts > div {
+    flex-direction: row;
+    gap: 12px;
+    align-items: baseline;
+  }
+  .family-facts strong {
+    font-size: 59px;
+  }
+  .family-facts span {
+    font-size: 8px;
+  }
+  .family-signature {
+    padding-top: 37px;
+    font-size: 8px;
+  }
+  .region-grid {
+    grid-template-columns: 1fr;
+    gap: 35px;
+  }
+  .region h2 {
+    font-size: 46px;
+  }
+  .region .section-label {
+    font-size: 9px;
+  }
+  .region p {
+    font-size: 16px;
+    max-width: 335px;
+  }
+  .city-list {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 17px;
+    margin-top: 20px;
+  }
+  .city-list button {
+    font-size: 13px;
+    min-height: 44px;
+  }
+  .city-list button > svg {
+    display: none;
+  }
+  .regional-map {
+    padding: 15px;
+    margin: 0 -5px;
+  }
+  .map-topline,
+  .map-bottomline {
+    font-size: 7px;
+  }
+  .map-bottomline > span:last-child {
+    font-size: 6px;
+  }
+  .contact h2 {
+    font-size: 47px;
+  }
+  .contact-heading {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+  }
+  .contact-heading p {
+    font-size: 16px;
+    margin-top: 22px;
+  }
+  .contact-heading > .action-button {
+    margin: 0;
+    min-height: 52px;
+    gap: 35px;
+  }
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 31px;
+    margin-top: 40px;
+  }
+  .contact-person {
+    padding-top: 18px;
+  }
+  .contact-person-label {
+    margin-bottom: 15px;
+    font-size: 8px;
+  }
+  .contact-phone {
+    font-size: 35px;
+    gap: 14px;
+    padding: 8px 0;
+  }
+  .contact-email {
+    font-size: 13px;
+    padding: 12px 0;
+    gap: 14px;
+  }
+  .contact-footnote {
+    align-items: flex-start;
+    font-size: 9px;
+    margin-top: 29px;
+  }
+  .contact-footnote svg {
+    margin-top: 2px;
+  }
+  .site-footer {
+    padding: 30px 24px 95px;
+  }
+  .footer-top {
+    align-items: flex-start;
+  }
+  .footer-top .wordmark-name {
+    font-size: 35px;
+  }
+  .footer-top .wordmark-descriptor {
+    display: none;
+  }
+  .footer-top > span {
+    font-size: 8px;
+    margin: 5px auto 0 0;
+  }
+  .footer-up {
+    font-size: 8px;
+    gap: 7px;
+    padding-top: 8px;
+  }
+  .footer-wordmark {
+    font-size: 12.5vw;
+    padding: 42px 0 30px;
+  }
+  .footer-bottom {
+    flex-wrap: wrap;
+    gap: 13px 20px;
+    font-size: 7px;
+  }
+  .footer-bottom > span:last-child {
+    width: 100%;
+  }
+  .mobile-actions {
+    display: grid;
+    grid-template-columns: 0.75fr 1.25fr;
+    position: fixed;
+    z-index: 20;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--ivory);
+    border-top: 1px solid var(--border);
+    padding: 9px 12px calc(9px + env(safe-area-inset-bottom));
+    gap: 8px;
+    box-shadow: 0 -6px 24px #10251f0a;
+  }
+  .mobile-actions > a,
+  .mobile-actions > button {
+    min-height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 10px;
+  }
+  .mobile-actions > button {
+    background: var(--forest);
+    color: var(--ivory);
+  }
+  .enquiry-dialog {
+    max-width: calc(100% - 20px);
+    max-height: calc(100dvh - 20px);
+  }
+  .enquiry-shell {
+    padding: 23px 20px 26px;
+  }
+  .enquiry-header h2 {
+    font-size: 36px;
+  }
+  .enquiry-intro {
+    font-size: 11px;
+  }
+  .enquiry-type {
+    font-size: 9px;
+    gap: 7px;
+    padding: 12px 9px;
+  }
+  .enquiry-type > svg {
+    width: 17px;
+  }
+  .field-row {
+    gap: 12px;
+  }
+  .field input,
+  .field textarea,
+  .field select {
+    font-size: 16px;
+  }
+  .enquiry-consent {
+    font-size: 10px;
+  }
+  .enquiry-actions .action-button {
+    width: 100%;
+  }
+}
+@media (max-width: 360px) {
+  .hero-content {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+  .hero-actions {
+    gap: 14px;
+  }
+  .family h2 {
+    font-size: 38px;
+  }
+  .property-title {
+    font-size: 23px;
+  }
+  .family-facts {
+    gap: 28px;
+  }
+  .contact h2 {
+    font-size: 43px;
+  }
+  .contact-phone {
+    font-size: 30px;
+  }
+  .enquiry-type-options {
+    grid-template-columns: 1fr;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

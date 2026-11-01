@@ -13,7 +13,7 @@ export default tseslint.config(
     rules: hooks.configs.recommended.rules,
   },
   {
-    files: ["tests/**", "*.config.*"],
+    files: ["tests/**", "scripts/**", "*.config.*"],
     languageOptions: { globals: globals.node },
   },
 );

@@ -1,55 +1,58 @@
-# GRI Grundbesitz
+# GRI Grundbesitz — V2
 
-A German-language, frontend-only website for a family property acquisition business in Nordrhein-Westfalen. Built with React, TypeScript, Vite, Motion, and custom CSS.
+German-language, frontend-only property acquisition website for a family business focused on Mönchengladbach, Viersen, Korschenbroich, Krefeld, Düsseldorf, Meerbusch and Köln. React, TypeScript, Vite and Motion.
 
-## Local development
+## Versions
+
+| Version        | Git branch    | Vercel project       | Address                               |
+| -------------- | ------------- | -------------------- | ------------------------------------- |
+| Original       | `main`        | `gri-grundbesitz`    | https://gri-grundbesitz.vercel.app    |
+| Forest & Ivory | `redesign/v2` | `gri-grundbesitz-v2` | https://gri-grundbesitz-v2.vercel.app |
+
+V2 has a separate working checkout and Vercel link. Never deploy this branch through the original project's local link or merge it into `main` without a separate release decision. The original design's baseline commit is `65c0a27220067dad655a29a4e1545dfab7185665`.
+
+## Development
 
 ```sh
-npm install
-npm run dev
+npm ci
+npm run dev -- --port 5188
 ```
 
-## Checks
+Node 22.14 or newer is required. The build generates static files in `dist/`.
+The development/build hooks fetch Boska directly from Fontshare when it is absent. Font binaries stay out of the public repository under Fontshare's licence. Subsequent local runs reuse the downloaded files; a fresh checkout needs network access for this preparation step. The resulting website serves the fonts locally.
 
 ```sh
+npm run build
 npm run typecheck
 npm run lint
 npm test
-npm run build
+npm run test:e2e -- --workers=2
 ```
 
-Node 22.14 or newer is required for the TypeScript test runner. Production files are generated in `dist/`. The site can be served from any static host. Hash-based navigation supports all three pages without a server rewrite.
+Browser checks use Playwright Chromium. Install the browser with `npx playwright install chromium` when necessary. Set `E2E_BASE_URL` to verify a running or deployed site; otherwise Playwright starts a local Vite server at port 5188. Screenshots and traces are written outside the application checkout in `../artifacts/`.
 
-## Pages and interactions
+## Design and behavior
 
-- Startseite: animated brand entrance, architectural parallax, interactive property tabs, benefits, process, illustrative NRW map, and FAQ.
-- Über uns: four-generation family history and 40 years of experience, using only the supplied business facts.
-- Kontakt: both supplied email addresses and telephone numbers.
-- Property enquiry: three validated steps followed by an email draft. No backend, data storage, file upload, analytics, or automatic sending. Visitors must open and send the message from their own email client.
+- One page: photo-led opening, buying profile and process, family, regional focus, direct contact.
+- Forest `#142E28`, ivory `#F3F0E8`, limestone `#DED7CB`, bronze `#B69A71`, ink `#202621`.
+- Self-hosted Boska headings and Manrope body text; architectural frame motif, restrained once-only reveals, native scrolling and reduced-motion support.
+- Native mobile menu and enquiry dialogs, keyboard focus management, and mobile contact actions that hide at the opening/contact section and during an enquiry.
+- All four property categories are visible; category actions preselect the enquiry type.
+- `#/familie`, `#/kontakt` and `#/` remain compatible with the corresponding new page anchors.
+- The map illustrates city centres and an approximate Rhine course. It does not identify office locations or a fixed purchasing radius.
 
-The site respects `prefers-reduced-motion`. Fonts and photos are hosted locally. Asset details are in `ASSETS.md`. Photos illustrate architectural subject matter and are not presented as GRI-owned properties.
+## Enquiries
 
-## Content handover
+The compact form validates property type, location, name, email and acknowledgement. Telephone, message, area and condition are optional. Additional property details can be expanded. A valid submission shows an editable summary and prepares an encoded email draft addressed to a supplied business email.
 
-Contact information is centralized in `src/content.ts`. The enquiry recipient allowlist is in `src/enquiry.ts`. Complete business registration details, a business address, and approved legal text were not supplied; add the final legal notice and privacy text before a public company launch.
+**The visitor opens and sends the email in their own email application.** There is no backend, automatic sending, storage, upload or analytics. The interface never claims a message was sent. Telephone and direct email links provide alternatives. Helper tests cover validation, recipient allowlisting, Unicode, boundaries and encoding; browser tests exercise the complete draft journey without sending an email.
+
+## Content and assets
+
+Contacts and regional content are in `src/content.ts`. Photography is illustrative and is not presented as GRI-owned inventory. Font/photo credits and map sources are in `ASSETS.md`. Business history uses only the supplied facts: 40 years and four generations, without an inferred founding year.
+
+The business address, full legal company details and approved legal/privacy copy have not been provided. Add the final client-approved content for the eventual business launch. The V2 review site is deliberately marked `noindex, nofollow`; remove that directive only for an agreed public launch.
 
 ## Deployment
 
-The website deploys to Vercel as a static Vite application. `vercel.json` sets `npm ci` as the install command, `npm run build` as the build command, and `dist` as the output directory. No environment variables or backend services are needed. The hash-based pages work without server rewrites.
-
-The public source repository contains the application, local fonts, photography, asset credits, tests, and lockfile. Local hosting connection metadata is ignored by Git and excluded from deployment uploads.
-
-## Design research
-
-The original design uses editorial architectural composition, oversized typography, cobalt transitions, guided scrolling, and restrained copy. Current reference: [Webflow's 2026 design trends](https://webflow.com/blog/web-design-trends-2026). Animation API usage was checked against the [official Motion documentation](https://motion.dev/docs/react-use-scroll).
-
-## Verification
-
-- Production build, TypeScript and ESLint pass.
-- 25 enquiry unit tests pass. Helper coverage: 100% lines/functions and 90.24% branches.
-- Browser checked at 375, 768, 1024 and 1440 pixels: no horizontal page overflow and full wordmark visibility.
-- Verified all three pages, navigation focus, native mobile-menu focus isolation/restoration, property preselection, and the full enquiry-to-email-draft journey with Unicode and decimal-comma areas.
-- Verified rapid back/forward form clicks cannot skip steps and required-field errors focus the appropriate control.
-- Both supplied telephone and email links are present. Email clients must be configured separately by the visitor; no test email was sent.
-- Reduced motion is implemented with MotionConfig and CSS media queries; the browser test environment did not expose a motion-preference emulation control.
-- Code and security reviews approved the implementation.
+Vercel builds with `npm ci`, `npm run build`, and output directory `dist`. The V2 project's production branch is `redesign/v2`; the original project continues to track `main`. Confirm the linked project name and ID before any CLI deployment. Local `.vercel/` metadata and `.env*` files are ignored and must never be committed. V2 needs no application environment variables.

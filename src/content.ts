@@ -3,97 +3,112 @@ export const CONTACTS = [
     email: "jano.gri@gri-grundbesitz.com",
     phone: "+49 176 23288447",
     phoneHref: "+4917623288447",
-    label: "Ihr direkter Kontakt",
   },
   {
     email: "m.gri@gri-grundbesitz.com",
     phone: "+49 162 7717592",
     phoneHref: "+491627717592",
-    label: "Ein weiterer guter Draht",
   },
 ] as const;
 
-export const PROPERTY_CONTENT = [
+export const NAVIGATION = [
+  { id: "ankauf", label: "Ankauf" },
+  { id: "familie", label: "Familie" },
+  { id: "region", label: "Region" },
+  { id: "kontakt", label: "Kontakt" },
+] as const;
+
+export const PROPERTIES = [
   {
-    name: "Einfamilienhaus",
-    title: "Häuser",
-    subtitle: "Ein Zuhause mit Geschichte.",
-    description:
-      "Ob freistehend, Doppelhaushälfte oder Reihenhaus: Wir sehen uns Ihre Immobilie persönlich an. Auch dann, wenn eine Renovierung ansteht.",
-    image: "/images/homes.webp",
+    type: "Einfamilienhaus",
+    title: "Einfamilienhäuser",
+    note: "Ein Zuhause. Neue Möglichkeiten.",
     number: "01",
   },
   {
-    name: "Mehrfamilienhaus",
+    type: "Mehrfamilienhaus",
     title: "Mehrfamilienhäuser",
-    subtitle: "Mehr Raum. Neue Perspektiven.",
-    description:
-      "Wir interessieren uns für Wohngebäude unterschiedlicher Größe und Substanz. Jede Immobilie verdient einen individuellen Blick.",
-    image: "/images/hero.webp",
+    note: "Raum für die nächste Geschichte.",
     number: "02",
   },
   {
-    name: "Eigentumswohnung",
-    title: "Wohnungen",
-    subtitle: "Kleine Fläche, großes Potenzial.",
-    description:
-      "Vermietet oder unbewohnt, gepflegt oder renovierungsbedürftig: Erzählen Sie uns von Ihrer Eigentumswohnung in NRW.",
-    image: "/images/detail.webp",
+    type: "Eigentumswohnung",
+    title: "Eigentumswohnungen",
+    note: "Vermietet oder unbewohnt.",
     number: "03",
   },
   {
-    name: "Grundstück",
+    type: "Grundstück",
     title: "Grundstücke",
-    subtitle: "Hier kann Neues entstehen.",
-    description:
-      "Ein unbebautes Grundstück oder eine Fläche mit Bestand? Gemeinsam schauen wir auf die Möglichkeiten Ihrer Liegenschaft.",
-    image: "/images/homes.webp",
+    note: "Potenzial beginnt mit einem Grund.",
     number: "04",
   },
 ] as const;
 
 export const PROCESS = [
   {
-    number: "01",
-    title: "Erst einmal: kennenlernen.",
-    body: "Sie erzählen uns von Ihrer Immobilie. Wir hören zu, klären erste Fragen und besprechen Ihre Vorstellungen. Persönlich und vertraulich.",
+    title: "Kontakt aufnehmen",
+    text: "Sie erzählen uns von Ihrer Immobilie. Wir hören zu.",
   },
   {
-    number: "02",
-    title: "Genau hinsehen.",
-    body: "Wir betrachten Lage, Zustand und Potenzial individuell. Die erste Einschätzung ist für Sie kostenlos und unverbindlich.",
+    title: "Prüfen & besprechen",
+    text: "Wir schauen genau hin und machen bei Interesse ein faires Kaufangebot.",
   },
   {
-    number: "03",
-    title: "Klar entscheiden.",
-    body: "Wenn Ihre Immobilie zu uns passt, erhalten Sie ein faires Kaufangebot. Sie entscheiden in Ruhe und ohne Verpflichtung.",
-  },
-  {
-    number: "04",
-    title: "Gemeinsam abschließen.",
-    body: "Sind wir uns einig, stimmen wir die nächsten Schritte mit Ihnen ab. Transparent, unkompliziert und mit persönlicher Begleitung bis zum Notartermin.",
+    title: "Gemeinsam abschließen",
+    text: "Wir stimmen die nächsten Schritte persönlich mit Ihnen ab.",
   },
 ] as const;
 
-export const FAQS = [
+// City-centre coordinates; used for a schematic geographic map, not office locations.
+export const CITIES = [
   {
-    question: "Welche Immobilien kaufen Sie?",
-    answer:
-      "Wir interessieren uns für Einfamilienhäuser, Mehrfamilienhäuser, Eigentumswohnungen und Grundstücke in Nordrhein-Westfalen. Jede Immobilie wird individuell betrachtet.",
+    name: "Mönchengladbach",
+    lat: 51.2,
+    lon: 6.433,
+    dx: -17,
+    dy: 27,
+    anchor: "end",
   },
   {
-    question: "Kaufen Sie auch renovierungsbedürftige Immobilien?",
-    answer:
-      "Ja. Wir berücksichtigen auch Immobilien mit Renovierungs- oder Sanierungsbedarf. Entscheidend ist der individuelle Blick auf Zustand, Lage und Potenzial.",
+    name: "Viersen",
+    lat: 51.25611,
+    lon: 6.39722,
+    dx: -15,
+    dy: -15,
+    anchor: "end",
   },
   {
-    question: "Ist die erste Einschätzung wirklich kostenlos?",
-    answer:
-      "Ja. Die erste Einschätzung Ihrer Immobilie ist kostenlos und unverbindlich. Daraus entsteht für Sie keine Verpflichtung zum Verkauf.",
+    name: "Korschenbroich",
+    lat: 51.183,
+    lon: 6.517,
+    dx: 14,
+    dy: 28,
+    anchor: "start",
   },
   {
-    question: "Sind Sie ein Makler oder kaufen Sie selbst?",
-    answer:
-      "Unser Schwerpunkt ist der Immobilienankauf. Diese Website richtet sich an Eigentümer, die ihre Immobilie in NRW verkaufen möchten. Wir bieten hier keine Immobilien zum Verkauf an.",
+    name: "Krefeld",
+    lat: 51.333,
+    lon: 6.567,
+    dx: -15,
+    dy: -15,
+    anchor: "end",
   },
+  {
+    name: "Düsseldorf",
+    lat: 51.2256,
+    lon: 6.7767,
+    dx: 15,
+    dy: 24,
+    anchor: "start",
+  },
+  {
+    name: "Meerbusch",
+    lat: 51.267,
+    lon: 6.667,
+    dx: 16,
+    dy: -14,
+    anchor: "start",
+  },
+  { name: "Köln", lat: 50.93639, lon: 6.95278, dx: 15, dy: 5, anchor: "start" },
 ] as const;

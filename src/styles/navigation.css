@@ -1,0 +1,151 @@
+.site-header {
+  height: 94px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--page-pad);
+  background: var(--forest);
+  color: var(--ivory);
+  gap: 35px;
+}
+.brand {
+  flex-shrink: 0;
+}
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+.wordmark-name {
+  font-family: Boska, Georgia, serif;
+  font-size: 44px;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+.wordmark-point {
+  color: var(--bronze);
+}
+.wordmark-descriptor {
+  font-size: 9px;
+  line-height: 1;
+  letter-spacing: 0.19em;
+  border-left: 1px solid #718075;
+  padding: 9px 0 9px 14px;
+}
+.desktop-nav {
+  display: flex;
+  gap: 30px;
+  margin-left: auto;
+  margin-right: 25px;
+}
+.desktop-nav a {
+  position: relative;
+  padding: 12px 0;
+  font-size: 11px;
+  color: #d0d3c8;
+}
+.desktop-nav a::after {
+  position: absolute;
+  content: "";
+  height: 1px;
+  width: 100%;
+  bottom: 4px;
+  left: 0;
+  background: var(--bronze);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s var(--ease);
+}
+.desktop-nav a:hover::after,
+.desktop-nav a:focus-visible::after {
+  transform: scaleX(1);
+}
+.header-enquire {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 13px 17px;
+  min-height: 44px;
+  border: 1px solid #7c8c80;
+  background: transparent;
+  color: var(--ivory);
+  font-size: 11px;
+  transition: background 0.2s;
+}
+.header-enquire:hover {
+  background: #1d3a32;
+}
+.menu-trigger {
+  display: none;
+  width: 44px;
+  height: 44px;
+  background: none;
+  color: inherit;
+  place-items: center;
+}
+.skip-link {
+  position: fixed;
+  top: 10px;
+  left: 15px;
+  z-index: 100;
+  padding: 14px 20px;
+  background: var(--ivory);
+  color: var(--forest);
+  transform: translateY(-200%);
+}
+.skip-link:focus {
+  transform: none;
+}
+.mobile-menu {
+  margin: 0 0 0 auto;
+  padding: 24px;
+  width: min(100%, 460px);
+  max-width: 100%;
+  height: 100dvh;
+  max-height: 100dvh;
+  border: 0;
+  background: var(--forest);
+  color: var(--ivory);
+}
+.mobile-menu::backdrop {
+  background: #101e18a6;
+}
+.mobile-menu-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+}
+.mobile-menu nav {
+  display: grid;
+  margin-top: 70px;
+}
+.mobile-menu nav a {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 21px 0;
+  font:
+    500 36px Boska,
+    Georgia,
+    serif;
+  border-bottom: 1px solid #536458;
+}
+.mobile-menu nav a > span {
+  font:
+    10px Manrope,
+    sans-serif;
+  color: var(--bronze);
+}
+.mobile-menu nav a > svg {
+  margin-left: auto;
+}
+.mobile-menu-phone {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 55px;
+  padding: 10px 0;
+  font-size: 14px;
+}

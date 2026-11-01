@@ -1,0 +1,476 @@
+.acquisition-grid {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 9%;
+}
+.acquisition-intro > p {
+  max-width: 325px;
+  margin-top: 27px;
+  color: var(--muted);
+  font-size: 16px;
+}
+.small-assurance {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 40px;
+  font-size: 11px;
+  line-height: 1.8;
+  color: var(--muted);
+}
+.small-assurance > span:first-child {
+  width: 6px;
+  height: 6px;
+  border: 1px solid var(--forest);
+  margin-top: 6px;
+}
+.property-list {
+  border-top: 1px solid var(--border);
+}
+.property-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 27px 0;
+  gap: 20px;
+  background: transparent;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.property-number {
+  align-self: flex-start;
+  font-size: 9px;
+  color: var(--muted);
+  padding-top: 8px;
+}
+.property-row-copy {
+  display: grid;
+  min-width: 0;
+  gap: 7px;
+  flex: 1;
+}
+.property-title {
+  overflow-wrap: anywhere;
+  font:
+    500 clamp(26px, 2.5vw, 40px)/1.1 Boska,
+    Georgia,
+    serif;
+  letter-spacing: -0.025em;
+}
+.property-note {
+  font-size: 13px;
+  color: var(--muted);
+}
+.property-arrow {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  transition:
+    color 0.25s,
+    background 0.25s,
+    transform 0.25s;
+}
+.property-row:hover .property-arrow {
+  background: var(--forest);
+  color: var(--ivory);
+  border-color: var(--forest);
+  transform: rotate(5deg);
+}
+.process-intro {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  border-top: 1px solid var(--border);
+  margin-top: 75px;
+  padding-top: 29px;
+  font-size: 11px;
+}
+.process-intro > span:first-child {
+  font-weight: 700;
+}
+.process-intro > span:last-child {
+  color: var(--muted);
+}
+.process-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 45px;
+  margin-top: 35px;
+}
+.process-step {
+  display: flex;
+  gap: 18px;
+}
+.step-number {
+  color: var(--muted);
+  font-size: 10px;
+  padding-top: 4px;
+}
+.process-step h3 {
+  font-size: 12px;
+  font-weight: 600;
+}
+.process-step p {
+  max-width: 260px;
+  margin-top: 9px;
+  font-size: 16px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+.family {
+  display: grid;
+  grid-template-columns: 1fr 1.08fr;
+  background: var(--forest);
+  color: var(--ivory);
+}
+.family-image {
+  position: relative;
+  min-height: 640px;
+  overflow: hidden;
+}
+.family-image > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  filter: saturate(0.62) brightness(0.78);
+}
+.family-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, #0a211bb3, transparent 55%);
+}
+.family-image-frame {
+  position: absolute;
+  inset: 32px;
+  border: 1px solid #e1d8b65c;
+  z-index: 1;
+}
+.family-image-caption {
+  position: absolute;
+  bottom: 61px;
+  left: 60px;
+  z-index: 2;
+  font:
+    500 30px Boska,
+    Georgia,
+    serif;
+}
+.family-content {
+  padding: 76px clamp(36px, 5vw, 80px) 40px;
+  display: flex;
+  flex-direction: column;
+}
+.family .section-label {
+  color: #c0c8b9;
+  margin-bottom: 48px;
+}
+.family h2 {
+  font-size: clamp(38px, 3.9vw, 62px);
+}
+.family h2 em {
+  color: #c9c4af;
+}
+.family-content p {
+  max-width: 390px;
+  margin-top: 25px;
+  font-size: 16px;
+  color: #c6cfc0;
+  line-height: 1.95;
+}
+.family-facts {
+  display: flex;
+  gap: 50px;
+  margin: 35px 0 24px;
+}
+.family-facts > div {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+.family-facts strong {
+  font:
+    500 65px/1 Boska,
+    Georgia,
+    serif;
+  color: var(--ivory);
+}
+.family-facts span {
+  font-size: 9px;
+  color: #c7cebd;
+}
+.family .text-link {
+  color: var(--ivory);
+  border-color: #748370;
+  font-size: 11px;
+}
+.family-signature {
+  margin-top: auto;
+  padding-top: 55px;
+  font-size: 9px;
+  letter-spacing: 0.07em;
+  color: #bdc5b6;
+}
+.region {
+  background: #ebe8de;
+}
+.region-grid {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 9%;
+  align-items: center;
+}
+.region p {
+  margin-top: 25px;
+  max-width: 325px;
+  font-size: 16px;
+  color: var(--muted);
+}
+.city-list {
+  list-style: none;
+  padding: 0;
+  margin: 28px 0 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 20px;
+}
+.city-list button {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 11px 0;
+  min-height: 44px;
+  background: none;
+  text-align: left;
+  font-size: 13px;
+  width: 100%;
+}
+.city-list button > span {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--forest);
+}
+.city-list button > svg {
+  margin-left: auto;
+  opacity: 0;
+}
+.city-list button:hover > svg,
+.city-list button:focus-visible > svg {
+  opacity: 1;
+}
+.regional-map {
+  border: 1px solid #bfc3b5;
+  padding: 20px;
+  color: var(--forest);
+  background: #f3f0e859;
+}
+.regional-map > svg {
+  width: 100%;
+  height: auto;
+}
+.map-topline,
+.map-bottomline {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+}
+.map-topline {
+  justify-content: space-between;
+}
+.map-bottomline {
+  padding-top: 12px;
+  border-top: 1px solid #c8c9bd;
+}
+.map-bottomline > span:last-child {
+  margin-left: auto;
+  font-size: 8px;
+}
+.map-key-dot {
+  width: 4px;
+  height: 4px;
+  background: var(--forest);
+  border-radius: 50%;
+}
+.map-river {
+  fill: none;
+  stroke: #98aaa2;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.65;
+}
+.river-name {
+  font:
+    500 15px Boska,
+    Georgia,
+    serif;
+  fill: #596b62;
+  letter-spacing: 0.1em;
+}
+.map-corners {
+  fill: none;
+  stroke: #b8b6a4;
+  stroke-width: 1;
+}
+.map-city-dot {
+  fill: var(--forest);
+}
+.map-city-halo {
+  fill: var(--forest);
+  opacity: 0.07;
+  transition: opacity 0.2s;
+}
+.map-city text {
+  fill: var(--forest);
+  font-size: 13px;
+  font-weight: 500;
+}
+.map-city.is-active .map-city-halo {
+  opacity: 0.25;
+}
+.map-city.is-active text {
+  font-weight: 800;
+}
+.contact {
+  background: var(--forest);
+  color: var(--ivory);
+}
+.contact .section-label {
+  color: #c6cabb;
+}
+.contact-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 50px;
+}
+.contact h2 {
+  font-size: clamp(48px, 5.6vw, 90px);
+}
+.contact h2 em {
+  color: #c9c4af;
+}
+.contact-heading p {
+  max-width: 365px;
+  margin-top: 25px;
+  font-size: 16px;
+  color: #cad2c6;
+}
+.contact-heading > .action-button {
+  margin-bottom: 9px;
+}
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  margin-top: 60px;
+}
+.contact-person {
+  border-top: 1px solid #697c6b;
+  padding-top: 20px;
+}
+.contact-person-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: #c9d0c1;
+  margin-bottom: 25px;
+}
+.contact-person-label svg {
+  color: var(--bronze);
+}
+.contact-phone,
+.contact-email {
+  display: flex;
+  gap: 17px;
+  align-items: center;
+}
+.contact-phone {
+  font:
+    500 clamp(25px, 2.8vw, 43px)/1.25 Boska,
+    Georgia,
+    serif;
+  padding: 9px 0;
+  letter-spacing: -0.02em;
+}
+.contact-email {
+  padding: 13px 0;
+  font-size: 13px;
+  color: #d5d9cd;
+  overflow-wrap: anywhere;
+}
+.contact-person a:hover {
+  color: #e1c798;
+}
+.contact-footnote {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 10px;
+  margin-top: 40px;
+  color: #ccd2c4;
+  line-height: 1.6;
+}
+.contact-footnote svg {
+  color: var(--bronze);
+}
+.site-footer {
+  padding: 42px var(--page-pad) 22px;
+  background: #10251f;
+  color: var(--ivory);
+  overflow: hidden;
+}
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 25px;
+}
+.footer-top > span {
+  font-size: 10px;
+  line-height: 1.7;
+  color: #c1c9bb;
+  margin-left: auto;
+  margin-right: 14%;
+}
+.footer-up {
+  font-size: 10px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  padding: 13px 0;
+}
+.footer-wordmark {
+  text-align: center;
+  font:
+    500 clamp(47px, 13.05vw, 240px)/1.1 Boska,
+    Georgia,
+    serif;
+  letter-spacing: -0.03em;
+  color: #8d9b8799;
+  padding: 48px 0 32px;
+  user-select: none;
+}
+.footer-bottom {
+  border-top: 1px solid #4e6350;
+  padding-top: 18px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  color: #bdc7b7;
+  font-size: 8px;
+}
+.mobile-actions {
+  display: none;
+}

@@ -1,4 +1,7 @@
 .openai/
+.env*
+.vercel/
+public/fonts/boska-*
 .git/
 node_modules/
 dist/

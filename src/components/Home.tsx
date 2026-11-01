@@ -1,542 +1,417 @@
-import { useRef, useState, type ReactNode } from "react";
-import {
-  AnimatePresence,
-  motion,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-} from "motion/react";
-import { ArrowDown, ArrowUpRight, Plus, Minus } from "lucide-react";
-import { PROPERTY_CONTENT, PROCESS, FAQS } from "../content";
-import { ActionButton, BrandMark, Reveal, SectionLabel, Star } from "./Shared";
+import { useState, type ReactNode } from "react";
+import { ArrowDown, ArrowUpRight, Check, Mail, Phone } from "lucide-react";
+import { motion, useReducedMotion } from "motion/react";
+import { CITIES, CONTACTS, PROCESS, PROPERTIES } from "../content";
+import { ActionButton, Reveal, SectionLabel } from "./Shared";
 
 interface HomeProps {
   onEnquire: (propertyType?: string) => void;
 }
 
 function Hero({ onEnquire }: HomeProps): ReactNode {
-  const ref = useRef<HTMLElement>(null);
   const reduced = useReducedMotion();
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
-  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "16%"]);
-  const titleX = useTransform(scrollYProgress, [0, 1], ["0%", "-5%"]);
-  return (
-    <section className="hero" ref={ref} aria-labelledby="hero-title">
-      <div className="hero-topline">
-        <span>
-          <span className="status-dot" />
-          Wir kaufen Immobilien in NRW.
-        </span>
-        <span>Familiengeführt. Seit 40 Jahren.</span>
-      </div>
-      <h1 id="hero-title" className="hero-brand" aria-label="GRI Grundbesitz">
-        <motion.span
-          style={reduced ? undefined : { x: titleX }}
-          aria-hidden="true"
-        >
-          {"GRI GRUNDBESITZ".split("").map((letter, i) => (
-            <motion.span
-              key={i}
-              className={letter === " " ? "brand-space" : "brand-letter"}
-              initial={reduced ? false : { y: "110%", rotate: 5 }}
-              animate={{ y: 0, rotate: 0 }}
-              transition={{
-                duration: 0.95,
-                delay: i * 0.035,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-            >
-              {letter === " " ? "\u00a0" : letter}
-            </motion.span>
-          ))}
-        </motion.span>
-      </h1>
-      <div className="hero-grid">
-        <div className="hero-copy">
-          <Reveal delay={0.25}>
-            <p className="eyebrow">Werte erkennen. Zukunft gestalten.</p>
-            <h2>
-              Ein guter
-              <br />
-              Grund für
-              <br />
-              <span className="serif-word">Neues.</span>
-              <span className="blue-period">*</span>
-            </h2>
-          </Reveal>
-          <Reveal delay={0.4}>
-            <p className="hero-description">
-              Ihre Immobilie hat Geschichte.
-              <br />
-              Wir geben ihr eine neue Perspektive.
-              <br />
-              Schnell, fair und persönlich.
-            </p>
-            <ActionButton onClick={() => onEnquire()}>
-              Immobilie anbieten
-            </ActionButton>
-            <span className="button-note">Kostenlos & unverbindlich</span>
-          </Reveal>
-          <a
-            className="hero-scroll"
-            href="#ankauf"
-            onClick={(e) => {
-              e.preventDefault();
-              document
-                .getElementById("ankauf")
-                ?.scrollIntoView({ behavior: reduced ? "instant" : "smooth" });
-            }}
-          >
-            <span>
-              <ArrowDown size={20} />
-            </span>
-            <span>Gute Gründe entdecken</span>
-          </a>
-        </div>
-        <motion.div
-          className="hero-image-wrap"
-          initial={
-            reduced ? false : { clipPath: "inset(8% 0 8% 0)", opacity: 0 }
-          }
-          animate={{ clipPath: "inset(0% 0 0% 0)", opacity: 1 }}
-          transition={{ duration: 1.3, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <motion.img
-            src="/images/hero.webp"
-            alt="Markante europäische Wohnarchitektur mit Balkonen und klaren Linien"
-            className="hero-image"
-            fetchPriority="high"
-            width="1800"
-            height="1400"
-            style={reduced ? undefined : { y: imageY }}
-          />
-          <div className="image-shade" />
-          <div className="photo-coordinate">
-            <span className="crosshair">+</span>Räume mit Perspektive.
-          </div>
-          <div className="hero-photo-footer">
-            <span>Immobilien. In guten Händen.</span>
-            <span>NRW ↗</span>
-          </div>
-          <div className="experience-seal">
-            <svg viewBox="0 0 120 120" className="seal-text" aria-hidden="true">
-              <defs>
-                <path
-                  id="seal-circle"
-                  d="M60,60m-44,0a44,44 0 1,1 88,0a44,44 0 1,1 -88,0"
-                />
-              </defs>
-              <text>
-                <textPath href="#seal-circle">
-                  VIER GENERATIONEN · EIN VERSPRECHEN ·{" "}
-                </textPath>
-              </text>
-            </svg>
-            <div>
-              <strong>40</strong>
-              <span>JAHRE</span>
-            </div>
-          </div>
-        </motion.div>
-      </div>
-      <div className="hero-bottomline">
-        <span>Ein Familienunternehmen. Ein klarer Fokus.</span>
-        <span>
-          Einfamilienhäuser <i /> Mehrfamilienhäuser <i /> Wohnungen <i />{" "}
-          Grundstücke
-        </span>
-        <BrandMark />
-      </div>
-    </section>
-  );
-}
-
-function PropertySection({ onEnquire }: HomeProps): ReactNode {
-  const [active, setActive] = useState(0);
-  const property = PROPERTY_CONTENT[active];
   return (
     <section
-      className="property-section section-pad"
-      id="ankauf"
-      aria-labelledby="property-title"
+      className="hero"
+      id="start"
+      tabIndex={-1}
+      aria-labelledby="hero-title"
     >
-      <SectionLabel number="01">Unser Ankaufprofil</SectionLabel>
-      <div className="section-heading-row">
-        <Reveal>
-          <h2 id="property-title">
-            Wir sehen mehr
-            <br />
-            als <span className="serif-word">vier Wände.</span>
-          </h2>
-        </Reveal>
-        <Reveal>
-          <p>
-            Ein neuer Lebensabschnitt beginnt oft mit einer Entscheidung. Wir
-            machen Ihnen den Immobilienverkauf so einfach wie möglich.
-          </p>
-        </Reveal>
+      <motion.div
+        className="hero-photo"
+        initial={reduced ? false : { opacity: 0, scale: 1.035 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <img
+          src="/images/v2-hero.webp"
+          alt="Europäische Wohnarchitektur mit gewachsener Bausubstanz"
+          width="2000"
+          height="1300"
+          fetchPriority="high"
+        />
+      </motion.div>
+      <div className="hero-shade" />
+      <div className="hero-frame" aria-hidden="true">
+        <span />
+        <span />
+        <span />
+        <span />
       </div>
-      <div className="property-explorer">
-        <div
-          className="property-tabs"
-          role="tablist"
-          aria-orientation="vertical"
-          aria-label="Immobilienarten"
-        >
-          {PROPERTY_CONTENT.map((item, i) => (
+      <div className="hero-content">
+        <p className="eyebrow hero-eyebrow">
+          <span /> Immobilienankauf · Niederrhein & Rheinland
+        </p>
+        <h1 id="hero-title">
+          Wir kaufen
+          <br />
+          <em>Immobilien.</em>
+        </h1>
+        <p className="hero-subtitle">Persönlich. In Ihrer Region.</p>
+        <p className="hero-description">
+          Häuser, Wohnungen und Grundstücke – auch mit Renovierungsbedarf. Wir
+          sehen den Wert Ihrer Immobilie.
+        </p>
+        <div className="hero-actions">
+          <ActionButton light onClick={() => onEnquire()}>
+            Immobilie anbieten
+          </ActionButton>
+          <a className="hero-phone" href={`tel:${CONTACTS[0].phoneHref}`}>
+            <Phone size={17} />
+            Anrufen
+          </a>
+        </div>
+        <p className="hero-note">
+          <Check size={13} /> Kostenlose & unverbindliche Ersteinschätzung
+        </p>
+      </div>
+      <div className="hero-experience">
+        <span>In der Familie verwurzelt.</span>
+        <strong>
+          40<span>Jahre</span>
+        </strong>
+        <span>Mit Blick nach vorn.</span>
+      </div>
+      <a className="hero-discover" href="#ankauf">
+        <span>Unser Ankaufprofil</span>
+        <ArrowDown size={17} />
+      </a>
+      <span className="hero-location" aria-hidden="true">
+        Ein guter Grund. Ein gutes Gespräch.
+      </span>
+    </section>
+  );
+}
+
+function Acquisition({ onEnquire }: HomeProps): ReactNode {
+  return (
+    <section
+      className="acquisition section-space"
+      id="ankauf"
+      tabIndex={-1}
+      aria-labelledby="acquisition-title"
+    >
+      <SectionLabel number="01">Was wir kaufen</SectionLabel>
+      <div className="acquisition-grid">
+        <Reveal className="acquisition-intro">
+          <h2 id="acquisition-title">
+            Jede Immobilie.
+            <br />
+            <em>Ein eigener Wert.</em>
+          </h2>
+          <p>
+            Gepflegt oder renovierungsbedürftig: Wir betrachten Ihre Immobilie
+            individuell. Offen, fair und mit Erfahrung.
+          </p>
+          <div className="small-assurance">
+            <span />
+            <span>
+              Wir kaufen selbst.
+              <br />
+              Sie sprechen direkt mit uns.
+            </span>
+          </div>
+        </Reveal>
+        <div className="property-list">
+          {PROPERTIES.map((property) => (
             <button
-              role="tab"
-              id={`property-tab-${i}`}
-              aria-selected={active === i}
-              aria-controls="property-panel"
-              tabIndex={active === i ? 0 : -1}
-              key={item.name}
-              className={`property-tab ${active === i ? "active" : ""}`}
-              onClick={() => setActive(i)}
-              onKeyDown={(event) => {
-                if (event.key === "ArrowDown" || event.key === "ArrowUp") {
-                  event.preventDefault();
-                  const next =
-                    (i +
-                      (event.key === "ArrowDown" ? 1 : -1) +
-                      PROPERTY_CONTENT.length) %
-                    PROPERTY_CONTENT.length;
-                  setActive(next);
-                  document.getElementById(`property-tab-${next}`)?.focus();
-                }
-              }}
+              key={property.type}
+              className="property-row"
+              onClick={() => onEnquire(property.type)}
+              aria-label={`${property.type} anbieten`}
             >
-              <span className="tab-number">{item.number}</span>
-              <span>{item.title}</span>
-              <ArrowUpRight size={25} />
+              <span className="property-number">{property.number}</span>
+              <span className="property-row-copy">
+                <span className="property-title">{property.title}</span>
+                <span className="property-note">{property.note}</span>
+              </span>
+              <span className="property-arrow">
+                <ArrowUpRight size={21} strokeWidth={1.4} />
+              </span>
             </button>
           ))}
-          <div className="property-aside">
-            <span className="status-dot" />
-            <p>
-              Mit Potenzial. Mit Charakter.
-              <br />
-              Auch mit Renovierungsbedarf.
-            </p>
-          </div>
         </div>
-        <div
-          className="property-panel"
-          role="tabpanel"
-          id="property-panel"
-          aria-labelledby={`property-tab-${active}`}
-        >
-          <div className="property-image">
-            <AnimatePresence mode="wait">
-              <motion.img
-                key={property.name}
-                src={property.image}
-                alt={`Architektur als Illustration für ${property.title}`}
-                width="1200"
-                height="900"
-                loading="lazy"
-                initial={{ opacity: 0, scale: 1.06 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.35 }}
-              />
-            </AnimatePresence>
-            <span className="property-image-label">{property.number} / 04</span>
-          </div>
-          <div className="property-detail">
-            <div>
-              <h3>{property.subtitle}</h3>
-              <p>{property.description}</p>
-            </div>
-            <button
-              className="round-button"
-              aria-label={`${property.name} anbieten`}
-              onClick={() => onEnquire(property.name)}
-            >
-              <ArrowUpRight size={26} />
-            </button>
-          </div>
-        </div>
+      </div>
+      <div className="process-intro">
+        <span>Ein klarer Weg.</span>
+        <span>Vom ersten Gespräch bis zum Kauf.</span>
+      </div>
+      <div className="process-grid">
+        {PROCESS.map((step, index) => (
+          <Reveal key={step.title} delay={index * 0.06}>
+            <article className="process-step">
+              <span className="step-number">0{index + 1}</span>
+              <div>
+                <h3>{step.title}</h3>
+                <p>{step.text}</p>
+              </div>
+            </article>
+          </Reveal>
+        ))}
       </div>
     </section>
   );
 }
 
-function Manifesto(): ReactNode {
-  const ref = useRef<HTMLElement>(null);
-  const reduced = useReducedMotion();
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-  const x = useTransform(scrollYProgress, [0, 1], ["10%", "-18%"]);
+function Family(): ReactNode {
   return (
-    <section className="manifesto" ref={ref}>
-      <div className="manifesto-top">
-        <span>Immobilien sind Vertrauenssache.</span>
-        <span>Wir nehmen das persönlich.</span>
+    <section
+      className="family"
+      id="familie"
+      tabIndex={-1}
+      aria-labelledby="family-title"
+    >
+      <div className="family-image">
+        <img
+          src="/images/detail.webp"
+          alt="Architektonisches Detail eines Wohngebäudes im Saarland"
+          width="1400"
+          height="1700"
+          loading="lazy"
+        />
+        <span className="family-image-caption">Was bleibt, sind Werte.</span>
+        <span className="family-image-frame" aria-hidden="true" />
       </div>
-      <motion.div
-        className="manifesto-type"
-        style={reduced ? undefined : { x }}
+      <div className="family-content">
+        <SectionLabel number="02">
+          Eine Familie. Vier Generationen.
+        </SectionLabel>
+        <Reveal>
+          <h2 id="family-title">
+            Immobilien wechseln.
+            <br />
+            <em>Vertrauen bleibt.</em>
+          </h2>
+          <p>
+            Was unsere Urgroßmutter begann, führten unser Großvater und unser
+            Vater weiter. Heute übernehmen wir als Brüder die Verantwortung. Mit
+            40 Jahren Familiengeschichte und einem persönlichen Blick auf jede
+            Immobilie.
+          </p>
+          <div className="family-facts">
+            <div>
+              <strong>40</strong>
+              <span>Jahre Erfahrung</span>
+            </div>
+            <div>
+              <strong>4</strong>
+              <span>Generationen</span>
+            </div>
+          </div>
+          <a className="text-link" href="#kontakt">
+            Lernen wir uns kennen
+            <ArrowUpRight size={18} />
+          </a>
+        </Reveal>
+        <div className="family-signature">Herkunft. Haltung. Zukunft.</div>
+      </div>
+    </section>
+  );
+}
+
+// Equirectangular projection with longitude corrected at the region's central latitude.
+function project(lat: number, lon: number): [number, number] {
+  return [80 + (lon - 6.25) * 450, 65 + (51.42 - lat) * 700];
+}
+
+function RegionalMap({ active }: { active: string | null }): ReactNode {
+  const rhine: [number, number][] = [
+    [51.46, 6.69],
+    [51.39, 6.72],
+    [51.34, 6.68],
+    [51.28, 6.73],
+    [51.24, 6.76],
+    [51.21, 6.73],
+    [51.17, 6.83],
+    [51.1, 6.84],
+    [51.04, 6.91],
+    [50.98, 6.98],
+    [50.93, 6.97],
+    [50.86, 7.02],
+  ];
+  const river = rhine
+    .map(
+      ([lat, lon], index) =>
+        `${index ? "L" : "M"}${project(lat, lon).join(" ")}`,
+    )
+    .join(" ");
+  return (
+    <div className="regional-map">
+      <div className="map-topline">
+        <span>Niederrhein & Rheinland</span>
+        <span>N ↑</span>
+      </div>
+      <svg
+        viewBox="0 0 520 510"
+        role="img"
+        aria-labelledby="map-title map-description"
       >
-        GUTER GRUND
-        <Star />
-        GUTES GEFÜHL
-        <Star />
-      </motion.div>
-      <div className="manifesto-bottom">
-        <p>
-          Keine leeren Versprechen.
-          <br />
-          Sondern ein ehrliches Gespräch.
-        </p>
-        <a href="#/familie" className="text-link">
-          Die Menschen hinter GRI
-          <ArrowUpRight size={22} />
-        </a>
+        <title id="map-title">Unser regionaler Schwerpunkt</title>
+        <desc id="map-description">
+          Schematische Karte der sieben genannten Städte am Niederrhein und im
+          Rheinland. Markierungen zeigen Stadtzentren, keine Bürostandorte.
+        </desc>
+        <defs>
+          <pattern
+            id="region-grid"
+            width="40"
+            height="40"
+            patternUnits="userSpaceOnUse"
+          >
+            <path
+              d="M40 0H0V40"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="0.5"
+              opacity="0.08"
+            />
+          </pattern>
+        </defs>
+        <rect width="520" height="510" fill="url(#region-grid)" />
+        <path d={river} className="map-river" />
+        <text
+          x="365"
+          y="333"
+          className="river-name"
+          transform="rotate(67 365 333)"
+        >
+          Rhein
+        </text>
+        <path d="M80 86V65h22M439 444v21h-22" className="map-corners" />
+        {CITIES.map((city) => {
+          const [x, y] = project(city.lat, city.lon);
+          return (
+            <g
+              key={city.name}
+              className={`map-city ${active === city.name ? "is-active" : ""}`}
+            >
+              <circle className="map-city-halo" cx={x} cy={y} r="12" />
+              <circle className="map-city-dot" cx={x} cy={y} r="3.8" />
+              <text x={x + city.dx} y={y + city.dy} textAnchor={city.anchor}>
+                {city.name}
+              </text>
+            </g>
+          );
+        })}
+      </svg>
+      <div className="map-bottomline">
+        <span className="map-key-dot" />
+        Unser Fokus. Unsere Region.<span>NRW / DE</span>
+      </div>
+    </div>
+  );
+}
+
+function Region(): ReactNode {
+  const [active, setActive] = useState<string | null>(null);
+  return (
+    <section
+      className="region section-space"
+      id="region"
+      tabIndex={-1}
+      aria-labelledby="region-title"
+    >
+      <div className="region-grid">
+        <Reveal>
+          <SectionLabel number="03">Nah dran. Vor Ort.</SectionLabel>
+          <h2 id="region-title">
+            Hier kennen
+            <br />
+            <em>wir uns aus.</em>
+          </h2>
+          <p>
+            Unser Schwerpunkt liegt am Niederrhein und im Rheinland. Mit kurzen
+            Wegen und einem Gespür für die Region.
+          </p>
+          <ul className="city-list">
+            {CITIES.map((city) => (
+              <li key={city.name}>
+                <button
+                  aria-label={`${city.name} auf der Karte hervorheben`}
+                  onMouseEnter={() => setActive(city.name)}
+                  onMouseLeave={() => setActive(null)}
+                  onFocus={() => setActive(city.name)}
+                  onBlur={() => setActive(null)}
+                  onClick={() => setActive(city.name)}
+                >
+                  <span />
+                  {city.name}
+                  <ArrowUpRight size={13} />
+                </button>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
+        <RegionalMap active={active} />
+      </div>
+    </section>
+  );
+}
+
+function Contact({ onEnquire }: HomeProps): ReactNode {
+  return (
+    <section
+      className="contact section-space"
+      id="kontakt"
+      tabIndex={-1}
+      aria-labelledby="contact-title"
+    >
+      <SectionLabel number="04">
+        Der erste Schritt ist ein Gespräch.
+      </SectionLabel>
+      <div className="contact-heading">
+        <Reveal>
+          <h2 id="contact-title">
+            Ihre Immobilie.
+            <br />
+            <em>Unser offenes Ohr.</em>
+          </h2>
+          <p>
+            Erzählen Sie uns, was Sie vorhaben. Wir nehmen uns Zeit für Ihre
+            Fragen – persönlich und vertraulich.
+          </p>
+        </Reveal>
+        <ActionButton light onClick={() => onEnquire()}>
+          Immobilie anbieten
+        </ActionButton>
+      </div>
+      <div className="contact-grid">
+        {CONTACTS.map((contact, index) => (
+          <article className="contact-person" key={contact.email}>
+            <div className="contact-person-label">
+              <span>Direkter Kontakt / 0{index + 1}</span>
+              <ArrowUpRight size={17} />
+            </div>
+            <a className="contact-phone" href={`tel:${contact.phoneHref}`}>
+              <Phone size={18} strokeWidth={1.4} />
+              <span>{contact.phone}</span>
+            </a>
+            <a className="contact-email" href={`mailto:${contact.email}`}>
+              <Mail size={17} strokeWidth={1.4} />
+              <span>{contact.email}</span>
+            </a>
+          </article>
+        ))}
+      </div>
+      <div className="contact-footnote">
+        <Check size={15} />
+        <span>
+          Kostenlose Ersteinschätzung. Keine Verpflichtung. Ein ehrliches
+          Gespräch.
+        </span>
       </div>
     </section>
   );
 }
 
 export function Home({ onEnquire }: HomeProps): ReactNode {
-  const [openFaq, setOpenFaq] = useState<number | null>(0);
   return (
     <>
       <Hero onEnquire={onEnquire} />
-      <PropertySection onEnquire={onEnquire} />
-      <Manifesto />
-      <section
-        className="values-section section-pad"
-        aria-labelledby="values-title"
-      >
-        <SectionLabel number="02">Gute Gründe für GRI</SectionLabel>
-        <div className="values-grid">
-          <Reveal>
-            <h2 id="values-title">
-              Weniger Aufwand.
-              <br />
-              <span className="serif-word">Mehr Vertrauen.</span>
-            </h2>
-            <p className="values-intro">
-              Ein Verkauf ist mehr als eine Unterschrift. Deshalb begleiten wir
-              Sie so, wie wir selbst begleitet werden möchten.
-            </p>
-            <a href="#/familie" className="text-link">
-              Unser Familienunternehmen
-              <ArrowUpRight size={22} />
-            </a>
-          </Reveal>
-          <div className="value-list">
-            {[
-              {
-                title: "Fair von Anfang an.",
-                body: "Eine kostenlose, unverbindliche Ersteinschätzung und ein ehrlicher Blick auf den Wert Ihrer Immobilie.",
-              },
-              {
-                title: "Persönlich. Und diskret.",
-                body: "Sie sprechen direkt mit uns. Ihre Situation, Ihre Fragen und Ihre Immobilie behandeln wir vertraulich.",
-              },
-              {
-                title: "Kompetenz mit Substanz.",
-                body: "40 Jahre Familiengeschichte im Immobiliengeschäft. Erfahrung, die weitergegeben wird.",
-              },
-              {
-                title: "Einfach weiterkommen.",
-                body: "Klare Absprachen und ein unkomplizierter Ablauf. Damit aus einer großen Entscheidung ein guter nächster Schritt wird.",
-              },
-            ].map((v, i) => (
-              <Reveal key={v.title} delay={i * 0.05}>
-                <article className="value-item">
-                  <span className="value-number">0{i + 1}</span>
-                  <div>
-                    <h3>{v.title}</h3>
-                    <p>{v.body}</p>
-                  </div>
-                  <Plus size={21} />
-                </article>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-      <section
-        className="process-section section-pad"
-        id="ablauf"
-        aria-labelledby="process-title"
-      >
-        <SectionLabel number="03">So einfach geht’s</SectionLabel>
-        <div className="section-heading-row">
-          <Reveal>
-            <h2 id="process-title">
-              Von Ihrem ersten Hallo.
-              <br />
-              Bis zum <span className="serif-word">guten Gefühl.</span>
-            </h2>
-          </Reveal>
-          <p>
-            Vier Schritte. Ein direkter Kontakt.
-            <br />
-            Und Sie wissen immer, woran Sie sind.
-          </p>
-        </div>
-        <div className="process-grid">
-          {PROCESS.map((step, i) => (
-            <Reveal key={step.number} delay={i * 0.1}>
-              <article className="process-card">
-                <span className="process-number">{step.number}</span>
-                <div className="process-line">
-                  <span />
-                  <ArrowUpRight size={19} />
-                </div>
-                <h3>{step.title}</h3>
-                <p>{step.body}</p>
-              </article>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-      <section className="region-section section-pad">
-        <div className="region-grid">
-          <div>
-            <SectionLabel number="04">Hier sind wir zu Hause</SectionLabel>
-            <Reveal>
-              <h2>
-                Unsere Region.
-                <br />
-                Unser <span className="serif-word">Fundament.</span>
-              </h2>
-              <p>
-                Nordrhein-Westfalen ist voller Möglichkeiten. Wir kaufen
-                Immobilien im gesamten Bundesland – vom Rheinland bis nach
-                Westfalen, von der Stadt bis aufs Land.
-              </p>
-              <div className="city-list">
-                <span>Düsseldorf</span>
-                <span>Köln</span>
-                <span>Essen</span>
-                <span>Dortmund</span>
-                <span>Bonn</span>
-                <span>Münster</span>
-                <span>und ganz NRW</span>
-              </div>
-            </Reveal>
-          </div>
-          <NRWMap />
-        </div>
-      </section>
-      <section className="faq-section section-pad">
-        <SectionLabel number="05">Kurz geklärt</SectionLabel>
-        <div className="faq-grid">
-          <Reveal>
-            <h2>
-              Gute Fragen.
-              <br />
-              <span className="serif-word">Klare Antworten.</span>
-            </h2>
-            <p>
-              Noch etwas offen?
-              <br />
-              <a href="#/kontakt" className="text-link">
-                Sprechen wir darüber
-                <ArrowUpRight size={20} />
-              </a>
-            </p>
-          </Reveal>
-          <div className="faq-list">
-            {FAQS.map((faq, i) => (
-              <div
-                className={`faq-item ${openFaq === i ? "open" : ""}`}
-                key={faq.question}
-              >
-                <h3>
-                  <button
-                    aria-expanded={openFaq === i}
-                    aria-controls={`faq-answer-${i}`}
-                    onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  >
-                    {faq.question}
-                    {openFaq === i ? <Minus size={20} /> : <Plus size={20} />}
-                  </button>
-                </h3>
-                <div
-                  className="faq-answer"
-                  id={`faq-answer-${i}`}
-                  hidden={openFaq !== i}
-                >
-                  <p>{faq.answer}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <Acquisition onEnquire={onEnquire} />
+      <Family />
+      <Region />
+      <Contact onEnquire={onEnquire} />
     </>
-  );
-}
-
-function NRWMap(): ReactNode {
-  return (
-    <div className="nrw-map">
-      <span className="map-caption">51° N / 7° O</span>
-      <svg
-        viewBox="0 0 420 420"
-        role="img"
-        aria-label="Stilisierte Karte von Nordrhein-Westfalen mit Städten im Rheinland und in Westfalen"
-      >
-        <defs>
-          <pattern
-            id="map-grid"
-            width="22"
-            height="22"
-            patternUnits="userSpaceOnUse"
-          >
-            <path
-              d="M22 0H0V22"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="0.5"
-              opacity="0.15"
-            />
-          </pattern>
-        </defs>
-        <rect width="420" height="420" fill="url(#map-grid)" />
-        <path
-          className="map-shape"
-          d="M260 34 286 45 288 67 325 77 329 102 357 121 341 146 360 169 340 195 311 196 306 219 278 239 284 268 252 275 234 301 206 299 189 325 165 316 149 349 126 337 113 366 89 345 79 318 56 299 74 272 57 247 76 221 67 202 91 185 90 162 115 150 128 124 156 133 181 113 196 82 224 78 231 50Z"
-        />
-        <g className="map-cities">
-          {[
-            { x: 125, y: 246, label: "Düsseldorf", dx: -76, dy: 20 },
-            { x: 140, y: 283, label: "Köln", dx: 10, dy: 5 },
-            { x: 149, y: 218, label: "Essen", dx: -45, dy: -13 },
-            { x: 204, y: 211, label: "Dortmund", dx: 12, dy: 5 },
-            { x: 235, y: 140, label: "Münster", dx: 12, dy: 5 },
-          ].map((c) => (
-            <g key={c.label}>
-              <circle cx={c.x} cy={c.y} r="4" />
-              <text x={c.x + c.dx} y={c.y + c.dy}>
-                {c.label}
-              </text>
-            </g>
-          ))}
-        </g>
-        <text className="map-nrw" x="268" y="333">
-          NRW
-        </text>
-        <path d="M370 30v25m-5-20 5-5 5 5" fill="none" stroke="currentColor" />
-        <text x="366" y="22" fontSize="11" fill="currentColor">
-          N
-        </text>
-      </svg>
-      <span className="map-footer">
-        <span className="status-dot" />
-        Unser Fokus: ganz Nordrhein-Westfalen.
-      </span>
-    </div>
   );
 }
