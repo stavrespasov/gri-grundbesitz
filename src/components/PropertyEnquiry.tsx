@@ -13,12 +13,14 @@ import {
   Building2,
   Check,
   ChevronDown,
+  Copy,
   House,
   LandPlot,
   Mail,
   X,
 } from "lucide-react";
 import {
+  createEnquiryCopyText,
   createEnquiryMailto,
   PROPERTY_TYPES,
   validateEnquiry,
@@ -61,10 +63,16 @@ export function PropertyEnquiry({
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [mailto, setMailto] = useState("");
   const [draftOpened, setDraftOpened] = useState(false);
+  const [copyState, setCopyState] = useState<
+    "idle" | "copying" | "copied" | "manual"
+  >("idle");
   const dialog = useRef<HTMLDialogElement>(null);
   const title = useRef<HTMLHeadingElement>(null);
   const completeTitle = useRef<HTMLHeadingElement>(null);
   const furtherDetails = useRef<HTMLDetailsElement>(null);
+  const copyField = useRef<HTMLTextAreaElement>(null);
+  const copyRequest = useRef(0);
+  const copyText = mailto ? createEnquiryCopyText(data) : "";
 
   useEffect(() => {
     const lastFocused =
@@ -78,6 +86,7 @@ export function PropertyEnquiry({
     title.current?.focus({ preventScroll: true });
     document.body.style.overflow = "hidden";
     return () => {
+      copyRequest.current += 1;
       element?.close();
       document.body.style.overflow = previousOverflow;
       lastFocused?.focus({ preventScroll: true });
@@ -88,6 +97,25 @@ export function PropertyEnquiry({
     (mailto ? completeTitle : title).current?.focus({ preventScroll: true });
     dialog.current?.scrollTo({ top: 0 });
   }, [mailto]);
+
+  useEffect(() => {
+    if (copyState !== "manual") return;
+    copyField.current?.focus();
+    copyField.current?.select();
+  }, [copyState]);
+
+  const copyMessage = async (): Promise<void> => {
+    const request = ++copyRequest.current;
+    setCopyState("copying");
+    try {
+      if (!navigator.clipboard?.writeText)
+        throw new Error("Clipboard unavailable");
+      await navigator.clipboard.writeText(copyText);
+      if (request === copyRequest.current) setCopyState("copied");
+    } catch {
+      if (request === copyRequest.current) setCopyState("manual");
+    }
+  };
 
   const update = <K extends keyof EnquiryData>(
     key: K,
@@ -118,6 +146,9 @@ export function PropertyEnquiry({
       });
       return;
     }
+    copyRequest.current += 1;
+    setCopyState("idle");
+    setDraftOpened(false);
     setMailto(createEnquiryMailto(data));
   };
 
@@ -203,10 +234,70 @@ export function PropertyEnquiry({
               Ihr E-Mail-Entwurf ist bereit.
             </h3>
             <p>
-              Hier wurde keine Nachricht versendet. Öffnen Sie den Entwurf,
-              prüfen Sie Ihre Angaben und senden Sie ihn in Ihrem
-              E-Mail-Programm selbst ab.
+              Öffnen Sie den Entwurf in Ihrem E-Mail-Programm und senden Sie ihn
+              dort ab. Hier wurde noch keine Nachricht versendet.
             </p>
+            <div className="enquiry-draft-actions">
+              <a
+                className="action-button"
+                href={mailto}
+                onClick={() => setDraftOpened(true)}
+              >
+                <span>E-Mail-Entwurf öffnen</span>
+                <ArrowUpRight size={19} aria-hidden="true" />
+              </a>
+              <button
+                type="button"
+                className="enquiry-copy-button"
+                disabled={copyState === "copying"}
+                onClick={copyMessage}
+              >
+                <Copy size={17} aria-hidden="true" />
+                <span>
+                  {copyState === "copying"
+                    ? "Wird kopiert …"
+                    : "Nachricht kopieren"}
+                </span>
+              </button>
+            </div>
+            <p className="enquiry-hint enquiry-recipient">
+              Empfänger: {CONTACTS[0].email}
+            </p>
+            {draftOpened && copyState === "idle" ? (
+              <p className="enquiry-draft-feedback" role="status">
+                Hat sich kein E-Mail-Programm geöffnet? Kopieren Sie die
+                Nachricht und senden Sie sie an {CONTACTS[0].email}.
+              </p>
+            ) : null}
+            {copyState === "copied" ? (
+              <p className="enquiry-draft-feedback" role="status">
+                Nachricht kopiert. Fügen Sie den Text in Ihre E-Mail ein und
+                senden Sie sie an {CONTACTS[0].email}.
+              </p>
+            ) : null}
+            {copyState === "manual" ? (
+              <div className="field enquiry-copy-field">
+                <p
+                  className="enquiry-draft-feedback"
+                  id="enquiry-copy-help"
+                  role="status"
+                >
+                  Bitte kopieren Sie den markierten Text und senden Sie ihn per
+                  E-Mail an {CONTACTS[0].email}.
+                </p>
+                <label htmlFor="enquiry-copy-text">
+                  Nachricht zum Kopieren
+                </label>
+                <textarea
+                  ref={copyField}
+                  id="enquiry-copy-text"
+                  rows={8}
+                  readOnly
+                  value={copyText}
+                  aria-describedby="enquiry-copy-help"
+                />
+              </div>
+            ) : null}
             <dl className="enquiry-summary">
               {[
                 ["Immobilienart", data.propertyType],
@@ -226,20 +317,6 @@ export function PropertyEnquiry({
                   </div>
                 ))}
             </dl>
-            <a
-              className="action-button"
-              href={mailto}
-              onClick={() => setDraftOpened(true)}
-            >
-              <span>E-Mail-Entwurf öffnen</span>
-              <ArrowUpRight size={19} aria-hidden="true" />
-            </a>
-            {draftOpened ? (
-              <p className="enquiry-draft-feedback" role="status">
-                Bitte prüfen und versenden Sie den Entwurf in Ihrem
-                E-Mail-Programm. Hier wurde keine Nachricht versendet.
-              </p>
-            ) : null}
             <p className="enquiry-hint">
               Kein E-Mail-Programm eingerichtet? Rufen Sie uns an:{" "}
               <a className="text-link" href={`tel:${CONTACTS[0].phoneHref}`}>
@@ -250,8 +327,10 @@ export function PropertyEnquiry({
               className="text-link enquiry-edit"
               type="button"
               onClick={() => {
+                copyRequest.current += 1;
                 setMailto("");
                 setDraftOpened(false);
+                setCopyState("idle");
               }}
             >
               <ArrowLeft size={16} aria-hidden="true" />

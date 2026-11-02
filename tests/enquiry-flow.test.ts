@@ -1,6 +1,10 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { validateEnquiry, type EnquiryData } from "../src/enquiry.ts";
+import {
+  createEnquiryCopyText,
+  validateEnquiry,
+  type EnquiryData,
+} from "../src/enquiry.ts";
 
 const valid = (changes: Partial<EnquiryData> = {}): EnquiryData => ({
   propertyType: "Einfamilienhaus",
@@ -63,5 +67,43 @@ describe("validateEnquiry", () => {
         ["propertyType", "location", "name", "email", "consent"],
       );
     }
+  });
+});
+
+describe("createEnquiryCopyText", () => {
+  it("creates readable recipient, subject and body text without URL encoding", () => {
+    const copyText = createEnquiryCopyText(
+      valid({
+        area: "120,5",
+        message:
+          "Grüße & Rückfragen + Unterlagen: 50%\nBitte nach 18 Uhr anrufen.",
+      }),
+    );
+    assert.ok(
+      copyText.startsWith(
+        "An: jano.gri@gri-grundbesitz.com\nBetreff: Immobilienangebot: Einfamilienhaus in 40213 Düsseldorf\n\nGuten Tag GRI Grundbesitz,",
+      ),
+    );
+    assert.ok(copyText.includes("Name: Éva Müller"));
+    assert.ok(copyText.includes("Fläche: 120,5 m²"));
+    assert.ok(
+      copyText.includes(
+        "Grüße & Rückfragen + Unterlagen: 50%\nBitte nach 18 Uhr anrufen.",
+      ),
+    );
+    assert.ok(!copyText.includes("%C3"));
+  });
+
+  it("supports the second approved business recipient", () => {
+    assert.ok(
+      createEnquiryCopyText(valid(), "m.gri@gri-grundbesitz.com").startsWith(
+        "An: m.gri@gri-grundbesitz.com\n",
+      ),
+    );
+  });
+
+  it("rejects invalid enquiries and unapproved recipients", () => {
+    assert.throws(() => createEnquiryCopyText(valid({ consent: false })));
+    assert.throws(() => createEnquiryCopyText(valid(), "other@example.com"));
   });
 });

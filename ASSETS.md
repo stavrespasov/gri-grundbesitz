@@ -21,7 +21,7 @@ The original geometric GRI mark, star motif, and stylized NRW map remain in V1 h
 
 ## V2 photography and map
 
-`public/images/v2-hero.webp` is a separately downloaded 2200 × 1350 WebP rendition of the Tobias Reich Heidelberg photograph listed above, using the Unsplash image service. `detail.webp` supplies the framed family-section architectural detail. Locations are illustrative, not claimed acquisition areas or company holdings.
+`public/images/v2-hero.webp` is a separately downloaded 2200 × 1350 WebP rendition of the Tobias Reich Heidelberg photograph listed above, using the Unsplash image service. `hero.webp`, by Aimar Gallardo, supplies the framed family-section image of a modern Berlin apartment building. It replaces the weathered Saarland building formerly shown there. Locations are illustrative, not claimed acquisition areas or company holdings.
 
 Regional city coordinates were checked against the linked city reference pages on 1 November 2026. The SVG uses these coordinates with a schematic projection; the Rhine path is approximate. All labels also appear in an accessible HTML list. Markers represent cities, not GRI offices.
 

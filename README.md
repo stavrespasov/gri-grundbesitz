@@ -43,9 +43,9 @@ Browser checks use Playwright Chromium. Install the browser with `npx playwright
 
 ## Enquiries
 
-The compact form validates property type, location, name, email and acknowledgement. Telephone, message, area and condition are optional. Additional property details can be expanded. A valid submission shows an editable summary and prepares an encoded email draft addressed to a supplied business email.
+The compact form validates property type, location, name, email and acknowledgement. Telephone, message, area and condition are optional. Additional property details can be expanded. A valid submission prepares an encoded email draft addressed to a supplied business email. The open-draft and copy-message actions appear above the editable summary so they are immediately reachable on phones.
 
-**The visitor opens and sends the email in their own email application.** There is no backend, automatic sending, storage, upload or analytics. The interface never claims a message was sent. Telephone and direct email links provide alternatives. Helper tests cover validation, recipient allowlisting, Unicode, boundaries and encoding; browser tests exercise the complete draft journey without sending an email.
+**The visitor opens and sends the email in their own email application.** There is no backend, automatic sending, storage, upload or analytics. The interface never claims a message was sent. Visitors without a working email-app handoff can copy readable recipient, subject and message text. If clipboard access is missing or denied, a labelled read-only field exposes and selects the text for manual copying. Telephone and direct email links remain available. Helper tests cover validation, recipient allowlisting, Unicode, boundaries, encoding and copy formatting; browser tests exercise the draft/copy journeys without sending an email or changing the operating-system clipboard.
 
 ## Content and assets
 

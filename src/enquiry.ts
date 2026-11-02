@@ -121,3 +121,11 @@ export function createEnquiryMailto(
   ].join("\n");
   return `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
+
+export function createEnquiryCopyText(
+  data: EnquiryData,
+  recipient: string = RECIPIENTS[0],
+): string {
+  const draft = new URL(createEnquiryMailto(data, recipient));
+  return `An: ${draft.pathname}\nBetreff: ${draft.searchParams.get("subject")}\n\n${draft.searchParams.get("body")}`;
+}

@@ -1,4 +1,4 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Locator, type Page } from "@playwright/test";
 import { resolve } from "node:path";
 
 const PROPERTY_OFFERS = [
@@ -66,6 +66,49 @@ async function openEnquiry(page: Page): Promise<void> {
   await expect(
     page.getByRole("dialog", { name: "Sprechen wir darüber." }),
   ).toBeVisible();
+}
+
+const COPY_MESSAGE =
+  "Grüße aus Düsseldorf – ½ Anteil & Hof\nBitte nach 18 Uhr anrufen. 🏡";
+
+async function prepareCopyDraft(page: Page): Promise<Locator> {
+  await page.goto("/");
+  await openEnquiry(page);
+  const dialog = page.getByRole("dialog", { name: "Sprechen wir darüber." });
+  await dialog.getByRole("radio", { name: "Grundstück", exact: true }).check();
+  await dialog.getByLabel(/Postleitzahl.*Ort/).fill("40213 Düsseldorf");
+  await dialog.getByLabel(/Ihr Name/).fill("Anaïs Weiß & Söhne");
+  await dialog
+    .getByLabel(/E-Mail-Adresse/)
+    .fill("anais.weiss+grund@example.com");
+  await dialog.getByLabel(/Telefon/).fill("+49 211 123456");
+  await dialog.getByLabel(/Nachricht/).fill(COPY_MESSAGE);
+  await dialog.getByText("Weitere Angaben", { exact: false }).click();
+  await dialog.getByLabel(/Fläche in m²/).fill("120,5");
+  await dialog.getByLabel(/Zustand/).selectOption("Renovierungsbedürftig");
+  await dialog.getByRole("checkbox").check();
+  await dialog
+    .getByRole("button", { name: "E-Mail vorbereiten", exact: true })
+    .click();
+  await expect(
+    dialog.getByRole("link", { name: "E-Mail-Entwurf öffnen", exact: true }),
+  ).toBeVisible();
+  return dialog;
+}
+
+function expectCompleteCopyText(message: string): void {
+  for (const value of [
+    "jano.gri@gri-grundbesitz.com",
+    "Immobilienangebot: Grundstück in 40213 Düsseldorf",
+    "Anaïs Weiß & Söhne",
+    "anais.weiss+grund@example.com",
+    "+49 211 123456",
+    "120,5 m²",
+    "Renovierungsbedürftig",
+    COPY_MESSAGE,
+  ]) {
+    expect(message).toContain(value);
+  }
 }
 
 test("public offer and contacts remain readable at all required viewport sizes", async ({
@@ -159,6 +202,24 @@ test("public offer and contacts remain readable at all required viewport sizes",
       });
       await page.locator("#kontakt").screenshot({
         path: resolve(`../artifacts/v2-${width}-contact.png`),
+      });
+      const family = page.locator("#familie");
+      const familyImage = family.getByRole("img", {
+        name: "Modernes Wohngebäude mit hellen Fassaden und Glasbalkonen in Berlin",
+        exact: true,
+      });
+      await expect(familyImage).toHaveAttribute("src", "/images/hero.webp");
+      await familyImage.scrollIntoViewIfNeeded();
+      await expect
+        .poll(() =>
+          familyImage.evaluate(
+            (element: HTMLImageElement) =>
+              element.complete && element.naturalWidth > 0,
+          ),
+        )
+        .toBe(true);
+      await family.screenshot({
+        path: resolve(`../artifacts/v2-${width}-family.png`),
       });
     });
   }
@@ -262,6 +323,186 @@ test("an owner can review a complete Unicode email draft without sending", async
   await page.screenshot({
     path: resolve("../artifacts/v2-draft.png"),
   });
+});
+
+test("a prepared message can be copied and editing preserves the enquiry", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.addInitScript(() => {
+    const messages: string[] = [];
+    Object.defineProperty(window, "__enquiryCopiedMessages", {
+      value: messages,
+    });
+    Object.defineProperty(navigator, "clipboard", {
+      configurable: true,
+      value: {
+        writeText: async (message: string): Promise<void> => {
+          messages.push(message);
+        },
+      },
+    });
+  });
+  const dialog = await prepareCopyDraft(page);
+  const draft = dialog.getByRole("link", {
+    name: "E-Mail-Entwurf öffnen",
+    exact: true,
+  });
+  const copy = dialog.getByRole("button", {
+    name: "Nachricht kopieren",
+    exact: true,
+  });
+  await expect(draft).toBeInViewport();
+  await expect(copy).toBeInViewport();
+  await copy.click();
+  await expect(dialog.getByRole("status")).toContainText("Nachricht kopiert");
+  const messages = await page.evaluate(
+    () =>
+      (window as Window & { __enquiryCopiedMessages?: string[] })
+        .__enquiryCopiedMessages ?? [],
+  );
+  expect(messages).toHaveLength(1);
+  expectCompleteCopyText(messages[0]);
+  await dialog
+    .getByRole("button", { name: "Angaben bearbeiten", exact: true })
+    .click();
+  await expect(
+    dialog.getByRole("radio", { name: "Grundstück", exact: true }),
+  ).toBeChecked();
+  await expect(dialog.getByLabel(/Postleitzahl.*Ort/)).toHaveValue(
+    "40213 Düsseldorf",
+  );
+  await expect(dialog.getByLabel(/Ihr Name/)).toHaveValue("Anaïs Weiß & Söhne");
+  await expect(dialog.getByLabel(/E-Mail-Adresse/)).toHaveValue(
+    "anais.weiss+grund@example.com",
+  );
+  await expect(dialog.getByLabel(/Nachricht/)).toHaveValue(COPY_MESSAGE);
+  await expect(dialog.getByLabel(/Telefon/)).toHaveValue("+49 211 123456");
+  await expect(dialog.getByLabel(/Fläche in m²/)).toHaveValue("120,5");
+  await expect(dialog.getByLabel(/Zustand/)).toHaveValue(
+    "Renovierungsbedürftig",
+  );
+  await expect(dialog.getByRole("checkbox")).toBeChecked();
+  await expect(dialog.getByRole("status")).not.toBeVisible();
+  await dialog
+    .getByRole("button", { name: "E-Mail vorbereiten", exact: true })
+    .click();
+  await expect(copy).toBeInViewport();
+  await expect(dialog.getByRole("status")).not.toBeVisible();
+});
+
+test("a late clipboard result cannot mark a revised draft as copied", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    const resolveCopies: Array<() => Promise<void>> = [];
+    Object.defineProperty(window, "__enquiryResolveCopies", {
+      value: resolveCopies,
+    });
+    Object.defineProperty(navigator, "clipboard", {
+      configurable: true,
+      value: {
+        writeText: (): Promise<void> =>
+          new Promise<void>((resolve) => {
+            resolveCopies.push(async () => {
+              resolve();
+              await Promise.resolve();
+            });
+          }),
+      },
+    });
+  });
+  const dialog = await prepareCopyDraft(page);
+  await dialog
+    .getByRole("button", { name: "Nachricht kopieren", exact: true })
+    .click();
+  await expect(
+    dialog.getByRole("button", { name: "Wird kopiert …", exact: true }),
+  ).toBeDisabled();
+  await dialog
+    .getByRole("button", { name: "Angaben bearbeiten", exact: true })
+    .click();
+  await dialog.getByLabel(/Nachricht/).fill("revised");
+  await dialog
+    .getByRole("button", { name: "E-Mail vorbereiten", exact: true })
+    .click();
+  await expect(dialog.getByText("revised", { exact: true })).toBeVisible();
+  await page.evaluate(async () => {
+    const pending = (
+      window as Window & {
+        __enquiryResolveCopies?: Array<() => Promise<void>>;
+      }
+    ).__enquiryResolveCopies;
+    if (pending?.length !== 1)
+      throw new Error("Expected one pending clipboard request");
+    await pending[0]();
+  });
+  await expect(dialog.getByRole("status")).not.toBeVisible();
+  await expect(
+    dialog.getByRole("button", { name: "Nachricht kopieren", exact: true }),
+  ).toBeEnabled();
+  await expect(dialog.getByText("revised", { exact: true })).toBeVisible();
+});
+
+test("manual copying stays usable when clipboard access is rejected or unavailable", async ({
+  browser,
+}) => {
+  for (const mode of ["rejected", "unavailable"] as const) {
+    await test.step(mode, async () => {
+      const context = await browser.newContext({
+        baseURL: test.info().project.use.baseURL,
+        viewport: { width: 375, height: 812 },
+        reducedMotion: "reduce",
+      });
+      try {
+        await context.addInitScript((clipboardMode) => {
+          Object.defineProperty(navigator, "clipboard", {
+            configurable: true,
+            value:
+              clipboardMode === "unavailable"
+                ? undefined
+                : {
+                    writeText: async (): Promise<never> => {
+                      throw new DOMException(
+                        "Clipboard access denied",
+                        "NotAllowedError",
+                      );
+                    },
+                  },
+          });
+        }, mode);
+        const page = await context.newPage();
+        const dialog = await prepareCopyDraft(page);
+        await dialog
+          .getByRole("button", { name: "Nachricht kopieren", exact: true })
+          .click();
+        const manualCopy = dialog.getByRole("textbox", {
+          name: "Nachricht zum Kopieren",
+          exact: true,
+        });
+        await expect(manualCopy).toBeVisible();
+        await expect(manualCopy).toHaveJSProperty("readOnly", true);
+        await expect(manualCopy).toBeFocused();
+        const message = await manualCopy.inputValue();
+        expectCompleteCopyText(message);
+        const selection = await manualCopy.evaluate(
+          (element: HTMLTextAreaElement) => ({
+            start: element.selectionStart,
+            end: element.selectionEnd,
+          }),
+        );
+        expect(selection).toEqual({ start: 0, end: message.length });
+        await expect(
+          dialog.getByRole("link", {
+            name: "E-Mail-Entwurf öffnen",
+            exact: true,
+          }),
+        ).toBeVisible();
+      } finally {
+        await context.close();
+      }
+    });
+  }
 });
 
 test("invalid required fields receive focus and optional fields can stay empty", async ({

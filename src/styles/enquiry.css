@@ -257,8 +257,38 @@
   margin: 0;
   overflow-wrap: anywhere;
 }
-.enquiry-complete > .action-button {
+.enquiry-draft-actions {
+  display: grid;
+  gap: 10px;
+  margin-top: 22px;
+}
+.enquiry-draft-actions > .action-button {
   display: flex;
+}
+.enquiry-copy-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 12px;
+  background: transparent;
+  color: var(--forest);
+  border: 1px solid #8f9e8c;
+  font-size: 12px;
+}
+.enquiry-copy-button:hover {
+  background: #e4e8dc;
+}
+.enquiry-copy-button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+.enquiry-copy-field {
+  margin-top: 18px;
+}
+.enquiry-copy-field .enquiry-draft-feedback {
+  margin-bottom: 14px;
 }
 .enquiry-complete > .enquiry-hint,
 .enquiry-draft-feedback {

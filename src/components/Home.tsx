@@ -163,10 +163,10 @@ function Family(): ReactNode {
     >
       <div className="family-image">
         <img
-          src="/images/detail.webp"
-          alt="Architektonisches Detail eines Wohngebäudes im Saarland"
-          width="1400"
-          height="1700"
+          src="/images/hero.webp"
+          alt="Modernes Wohngebäude mit hellen Fassaden und Glasbalkonen in Berlin"
+          width="2000"
+          height="3557"
           loading="lazy"
         />
         <span className="family-image-caption">Was bleibt, sind Werte.</span>
