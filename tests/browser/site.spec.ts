@@ -129,14 +129,25 @@ test("public offer and contacts remain readable at all required viewport sizes",
           page.getByRole("link", { name: email, exact: true }).first(),
         ).toHaveAttribute("href", `mailto:${email}`);
       }
-      for (const [phone, href] of [
-        ["+49 176 23288447", "+4917623288447"],
-        ["+49 162 7717592", "+491627717592"],
+      for (const [email, phone, href] of [
+        ["jano.gri@gri-grundbesitz.com", "0162 7717592", "+491627717592"],
+        ["m.gri@gri-grundbesitz.com", "0176 23288447", "+4917623288447"],
       ]) {
-        await expect(
-          page.getByRole("link", { name: phone, exact: true }).first(),
-        ).toHaveAttribute("href", `tel:${href}`);
+        const card = page.locator(".contact-person").filter({
+          has: page.getByRole("link", { name: email, exact: true }),
+        });
+        const phoneLink = card.getByRole("link", { name: phone, exact: true });
+        await expect(phoneLink).toHaveAttribute("href", `tel:${href}`);
+        await expect(phoneLink).toHaveCSS("font-family", /Manrope/);
       }
+      await expect(
+        page.locator(".contact-person").filter({
+          has: page.getByRole("link", {
+            name: "m.gri@gri-grundbesitz.com",
+            exact: true,
+          }),
+        }),
+      ).toContainText("Marcellino");
       await expectNoHorizontalOverflow(page);
       expect(failedResponses).toEqual([]);
       await page.screenshot({
@@ -145,6 +156,9 @@ test("public offer and contacts remain readable at all required viewport sizes",
       await page.screenshot({
         path: resolve(`../artifacts/v2-${width}.png`),
         fullPage: true,
+      });
+      await page.locator("#kontakt").screenshot({
+        path: resolve(`../artifacts/v2-${width}-contact.png`),
       });
     });
   }

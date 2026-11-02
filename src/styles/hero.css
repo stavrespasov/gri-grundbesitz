@@ -149,10 +149,10 @@
 }
 .hero-experience strong {
   font:
-    500 105px/0.98 Boska,
-    Georgia,
-    serif;
-  letter-spacing: -0.045em;
+    500 80px/1.1 Manrope,
+    sans-serif;
+  font-variant-numeric: lining-nums tabular-nums;
+  letter-spacing: -0.04em;
   margin: 13px 0;
 }
 .hero-experience strong span {

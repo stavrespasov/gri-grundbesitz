@@ -1,13 +1,15 @@
 export const CONTACTS = [
   {
+    label: "Direkter Kontakt",
     email: "jano.gri@gri-grundbesitz.com",
-    phone: "+49 176 23288447",
-    phoneHref: "+4917623288447",
+    phone: "0162 7717592",
+    phoneHref: "+491627717592",
   },
   {
+    label: "Marcellino",
     email: "m.gri@gri-grundbesitz.com",
-    phone: "+49 162 7717592",
-    phoneHref: "+491627717592",
+    phone: "0176 23288447",
+    phoneHref: "+4917623288447",
   },
 ] as const;
 

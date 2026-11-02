@@ -63,9 +63,6 @@
     flex-direction: column;
     gap: 8px;
   }
-  .contact-phone {
-    font-size: 30px;
-  }
 }
 @media (max-width: 850px) {
   .section-space {
@@ -109,7 +106,7 @@
     width: 132px;
   }
   .hero-experience strong {
-    font-size: 85px;
+    font-size: 64px;
   }
   .hero-experience > span {
     font-size: 8px;
@@ -226,7 +223,6 @@
     gap: 30px;
   }
   .contact-phone {
-    font-size: 27px;
     gap: 12px;
   }
   .contact-email {
@@ -476,7 +472,7 @@
     align-items: baseline;
   }
   .family-facts strong {
-    font-size: 59px;
+    font-size: 52px;
   }
   .family-facts span {
     font-size: 8px;
@@ -552,7 +548,6 @@
     font-size: 8px;
   }
   .contact-phone {
-    font-size: 35px;
     gap: 14px;
     padding: 8px 0;
   }
@@ -685,8 +680,8 @@
   .contact h2 {
     font-size: 43px;
   }
-  .contact-phone {
-    font-size: 30px;
+  .family-facts strong {
+    font-size: 47px;
   }
   .enquiry-type-options {
     grid-template-columns: 1fr;

@@ -24,6 +24,7 @@ import {
   validateEnquiry,
   type EnquiryData,
 } from "../enquiry";
+import { CONTACTS } from "../content";
 
 const EMPTY: EnquiryData = {
   propertyType: "",
@@ -241,8 +242,8 @@ export function PropertyEnquiry({
             ) : null}
             <p className="enquiry-hint">
               Kein E-Mail-Programm eingerichtet? Rufen Sie uns an:{" "}
-              <a className="text-link" href="tel:+4917623288447">
-                +49 176 23288447
+              <a className="text-link" href={`tel:${CONTACTS[0].phoneHref}`}>
+                {CONTACTS[0].phone}
               </a>
             </p>
             <button

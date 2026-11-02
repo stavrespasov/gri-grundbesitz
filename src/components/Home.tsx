@@ -379,7 +379,9 @@ function Contact({ onEnquire }: HomeProps): ReactNode {
         {CONTACTS.map((contact, index) => (
           <article className="contact-person" key={contact.email}>
             <div className="contact-person-label">
-              <span>Direkter Kontakt / 0{index + 1}</span>
+              <span>
+                {contact.label} / 0{index + 1}
+              </span>
               <ArrowUpRight size={17} />
             </div>
             <a className="contact-phone" href={`tel:${contact.phoneHref}`}>
